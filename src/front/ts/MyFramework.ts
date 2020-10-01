@@ -5,9 +5,8 @@ class MyFramework {
         return e;
     }
 
-
-    configClick(id:string, callback:Function):void {
-        let b:HTMLElement = document.getElementById(id);
-        b.addEventListener("click", () => { callback(); });
+    getElementByEvent(evt:Event):HTMLElement {
+        return <HTMLElement>evt.target;
     }
+
 }

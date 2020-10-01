@@ -12,7 +12,10 @@ let user = "TypesScript Users!";
 
 //=======[ Main module code ]==================================================
 
-class Main {
+class Main implements EventListenerObject{
+    
+    public mf:MyFramework;
+
     main():void{
         console.log("Hola mundo desde main");
         let users = new Array<User>();
@@ -24,8 +27,8 @@ class Main {
         
         this.mostrarUsers(users);
 
-        let mf:MyFramework = new MyFramework();
-        mf.configClick("boton", () => (this.evento()));
+        this.mf = new MyFramework();
+        document.addEventListener("click", this);
         }
     
     mostrarUsers(users:Array<User>):void {
@@ -34,9 +37,11 @@ class Main {
         }
     }
 
-    evento():void {
+    handleEvent(evt: Event): void {
         console.log("Se hizo click!");
         console.log(this);
+        let element:HTMLElement = this.mf.getElementByEvent(evt);
+        element.textContent = "Hola Mundo!";
     }
 }
 
