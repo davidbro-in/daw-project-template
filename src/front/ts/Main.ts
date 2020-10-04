@@ -90,9 +90,7 @@ class Main implements EventListenerObject, GETResponseListener, POSTResponseList
             let data = { "id":`${b.id}`, "state":state };
 
             this.mf.requestPOST("https://cors-anywhere.herokuapp.com/https://postman-echo.com/post", data, this);
-        } else {
-
-        }
+        } 
     }
 }
 
