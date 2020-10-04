@@ -1,0 +1,29 @@
+[{
+        "id": "1",
+        "name": "Lampara 1",
+        "description": "Luz Habitación",
+        "state": "0",
+        "type": "1"
+    },
+    {
+        "id": "2",
+        "name": "Cortina 1",
+        "description": "Cortina Habitación",
+        "state": "0",
+        "type": "0"
+    },
+    {
+        "id": "3",
+        "name": "Cortina 2",
+        "description": "Cortina living",
+        "state": "0",
+        "type": "1"
+    },
+    {
+        "id": "4",
+        "name": "Lampara 2",
+        "description": "Luz living",
+        "state": "0",
+        "type": "0"
+    }
+]
