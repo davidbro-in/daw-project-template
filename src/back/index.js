@@ -24,9 +24,29 @@ var db_conn = require('./mysql-connector');
 //=======[ Main module code ]==================================================
 
 app.get('/devices/:id', function(req, res, next) {
-    let id = req.params.id;
-    response = `{ 'key1':${id} }`
-    res.send(JSON.stringify(response)).status(200);
+    db_conn.query('SELECT * FROM Devices WHERE id=?', [req.params.id], function(err, respuesta) {
+        if (err) {
+            res.send(err).status(500);
+            return;
+        }
+        res.send(respuesta);
+    });
+});
+
+app.post('/devices/:id', function(req, res, next) {
+    let state;
+    if (req.query.state == "true") {
+        state = 1;
+    } else {
+        state = 0;
+    }
+    db_conn.query('UPDATE Devices SET state=? WHERE id=?', [state, req.params.id], function(err, respuesta) {
+        if (err) {
+            res.send(err).status(500);
+            return;
+        }
+        res.send(respuesta);
+    });
 });
 
 app.get('/devices', function(req, res, next) {

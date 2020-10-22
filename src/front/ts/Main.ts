@@ -86,10 +86,11 @@ class Main implements EventListenerObject, GETResponseListener, POSTResponseList
             b.textContent = `Click ${this.counter}`;
         } else if (b.id.startsWith("dev_")) {
             console.log(`Cambio en switch: ${b.id}`);
+            console.log(`Está en on: ${(<HTMLInputElement>b).checked}`);
             let state: boolean = this.view.getSwitchStataById(b.id);
             let data = { "id": `${b.id}`, "state": state };
 
-            this.mf.requestPOST("https://cors-anywhere.herokuapp.com/https://postman-echo.com/post", data, this);
+            this.mf.requestPOST(`http://localhost:8000/devices/${b.id.replace("dev_", "")}?state=${(<HTMLInputElement>b).checked}`, data, this);
         }
     }
 }
