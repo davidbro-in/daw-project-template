@@ -12,10 +12,10 @@ class ViewMainPage {
         for (let device of devices) {
             let image_name: string;
             switch (device.type) {
-                case "1":
+                case 1:
                     image_name = "lightbulb"
                     break;
-                case "0":
+                case 0:
                     image_name = "window"
                     break;
                 default:

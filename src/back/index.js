@@ -19,6 +19,8 @@ app.use(express.json());
 // to serve static files
 app.use(express.static('/home/node/app/static/'));
 
+var db_conn = require('./mysql-connector');
+
 //=======[ Main module code ]==================================================
 
 app.get('/devices/:id', function(req, res, next) {
@@ -28,10 +30,13 @@ app.get('/devices/:id', function(req, res, next) {
 });
 
 app.get('/devices', function(req, res, next) {
-    let query = req.query;
-    console.log(query.id);
-    response = `{ 'key1':${query.id} }`
-    res.send(JSON.stringify(response)).status(200);
+    db_conn.query('SELECT * FROM Devices', function(err, respuesta) {
+        if (err) {
+            res.send(err).status(500);
+            return;
+        }
+        res.send(respuesta);
+    });
 });
 
 app.listen(PORT, function(req, res) {

@@ -17,7 +17,7 @@ interface DeviceInt {
     name: string;
     description: string;
     state: string;
-    type: string;
+    type: number;
 }
 
 class Main implements EventListenerObject, GETResponseListener, POSTResponseListener {
@@ -43,7 +43,7 @@ class Main implements EventListenerObject, GETResponseListener, POSTResponseList
 
         this.mf.getElementById("boton").addEventListener("click", this);
 
-        this.mf.requestGET("Devices.json", this);
+        this.mf.requestGET("http://localhost:8000/devices", this);
 
     }
 
