@@ -9,7 +9,9 @@
     "author": "Agustin Bassi, Brian Ducca, Santiago Germino",
     "license": "MIT",
     "dependencies": {
+        "body-parser": "^1.19.0",
         "express": "^4.17.1",
+        "multer": "^1.4.2",
         "mysql": "^2.18.1"
     }
 }
