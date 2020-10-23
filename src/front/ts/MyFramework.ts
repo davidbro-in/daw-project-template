@@ -6,6 +6,10 @@ interface POSTResponseListener {
     handlePOSTResponse(status: number, response: string): void;
 }
 
+interface PUTResponseListener {
+    handlePUTResponse(status: number, response: string): void;
+}
+
 class MyFramework {
     getElementById(id: string): HTMLElement {
         let e: HTMLElement;
@@ -50,6 +54,29 @@ class MyFramework {
             }
         };
         xhr.open('POST', url, true);
+
+        let formData: FormData = new FormData();
+        for (let key in data) {
+            formData.append(key, data[key]);
+        }
+        xhr.send(formData);
+    }
+    
+    requestPUT(url: string, data: object, listener: PUTResponseListener): void {
+        let xhr: XMLHttpRequest;
+        xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    listener.handlePUTResponse(xhr.status, xhr.responseText);
+                }
+                else {
+                    listener.handlePUTResponse(xhr.status, null);
+                }
+            }
+        };
+        xhr.open('PUT', url, true);
 
         let formData: FormData = new FormData();
         for (let key in data) {

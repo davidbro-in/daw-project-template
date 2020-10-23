@@ -20,7 +20,7 @@ interface DeviceInt {
     type: number;
 }
 
-class Main implements EventListenerObject, GETResponseListener, POSTResponseListener {
+class Main implements EventListenerObject, GETResponseListener, POSTResponseListener, PUTResponseListener {
 
     public mf: MyFramework;
     public view: ViewMainPage;
@@ -44,6 +44,8 @@ class Main implements EventListenerObject, GETResponseListener, POSTResponseList
         this.mf.getElementById("boton").addEventListener("click", this);
 
         this.mf.requestGET("http://localhost:8000/devices", this);
+
+        document.getElementsByClassName(".collapsible");
 
     }
 
@@ -73,6 +75,11 @@ class Main implements EventListenerObject, GETResponseListener, POSTResponseList
         console.log(response);
     }
 
+    handlePUTResponse(status: number, response: string): void {
+        console.log(status);
+        console.log(response);
+    }
+
     handleEvent(evt: Event): void {
         console.log(`Evento: ${evt.type}`);
         console.log(this);
@@ -82,15 +89,28 @@ class Main implements EventListenerObject, GETResponseListener, POSTResponseList
         console.log(b);
 
         if (b.id == "boton") {
-            this.counter++;
-            b.textContent = `Click ${this.counter}`;
+            let name = <HTMLInputElement>this.mf.getElementById("name");
+            let description = <HTMLInputElement>this.mf.getElementById("description");
+            let light = <HTMLInputElement>this.mf.getElementById("light");
+            let window = <HTMLInputElement>this.mf.getElementById("window");
+            let device_type:number;
+            if (light.checked) {
+                device_type = 0;
+            } else {
+                device_type = 1;
+            }
+            let data = { "name": name.value, "description": description.value, "type": device_type };            
+
+            this.mf.requestPOST("http://localhost:8000/devices", data, this);
+            name.value = "";
+            description.value = "";
         } else if (b.id.startsWith("dev_")) {
             console.log(`Cambio en switch: ${b.id}`);
             console.log(`Está en on: ${(<HTMLInputElement>b).checked}`);
             let state: boolean = this.view.getSwitchStataById(b.id);
-            let data = { "id": `${b.id}`, "state": state };
+            let data = { "id": b.id, "state": state };
 
-            this.mf.requestPOST(`http://localhost:8000/devices/${b.id.replace("dev_", "")}?state=${(<HTMLInputElement>b).checked}`, data, this);
+            this.mf.requestPUT(`http://localhost:8000/devices/${b.id.replace("dev_", "")}?state=${(<HTMLInputElement>b).checked}`, data, this);
         }
     }
 }
@@ -105,4 +125,11 @@ window.onload = function () {
     let myMain = new Main();
     myMain.main();
 }
+
+var elem = document.querySelector('.collapsible.expandable');
+var instance = M.Collapsible.init(elem, {
+  accordion: false
+});
+
 //=======[ End of file ]=======================================================
+        
