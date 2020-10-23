@@ -54,12 +54,14 @@ class MyFramework {
             }
         };
         xhr.open('POST', url, true);
-
-        let formData: FormData = new FormData();
-        for (let key in data) {
-            formData.append(key, data[key]);
-        }
-        xhr.send(formData);
+        // envio JSON en body de request (Usar con NODEJS)
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.send(JSON.stringify(data));
+        // let formData: FormData = new FormData();
+        // for (let key in data) {
+        //     formData.append(key, data[key]);
+        // }
+        // xhr.send(formData);
     }
     
     requestPUT(url: string, data: object, listener: PUTResponseListener): void {

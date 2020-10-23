@@ -11,16 +11,11 @@
 var PORT = 3000;
 
 var express = require('express');
-var bodyParser = require('body-parser');
-var multer = require('multer');
-var upload = multer();
 var app = express();
 var mysql = require('./mysql-connector');
 
 // to parse application/json
 app.use(express.json());
-// for parsing multipart/form-data
-app.use(upload.array());
 // to serve static files
 app.use(express.static('/home/node/app/static/'));
 
