@@ -36,6 +36,7 @@ class ViewMainPage {
                                     </label>
                                     </div>
                                 </a>
+                                <a class="btn-floating btn-small waves-effect waves-light edit"><i id="edit_dev_${device.id}" class="material-icons">edit</i></a>
                             </li>`
         }
 

@@ -34,19 +34,33 @@ app.get('/devices/:id', function(req, res, next) {
 });
 
 app.put('/devices/:id', function(req, res, next) {
+    console.log("Editar dispositivo: " + req.params.id);
+    console.log("Name: " + req.body.name);
     let state;
-    if (req.query.state == "true") {
+    if (req.body.state == true) {
         state = 1;
     } else {
         state = 0;
     }
-    db_conn.query('UPDATE Devices SET state=? WHERE id=?', [state, req.params.id], function(err, respuesta) {
-        if (err) {
-            res.send(err).status(500);
-            return;
-        }
-        res.send(respuesta);
-    });
+    console.log("State: " + req.body.state);
+    console.log("State: " + state);
+    if (req.body.name != undefined && req.body.description != undefined && req.body.type != undefined) {
+        db_conn.query('UPDATE Devices SET state=?, name=?, description=?, type=? WHERE id=?', [state, req.body.name, req.body.description, req.body.type, req.params.id], function(err, respuesta) {
+            if (err) {
+                res.send(err).status(500);
+                return;
+            }
+            res.send(respuesta);
+        });
+    } else {
+        db_conn.query('UPDATE Devices SET state=? WHERE id=?', [state, req.params.id], function(err, respuesta) {
+            if (err) {
+                res.send(err).status(500);
+                return;
+            }
+            res.send(respuesta);
+        });
+    }
 });
 
 app.get('/devices', function(req, res, next) {
