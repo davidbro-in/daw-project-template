@@ -50,7 +50,8 @@ app.put('/devices/:id', function(req, res, next) {
 });
 
 app.get('/devices', function(req, res, next) {
-    db_conn.query('SELECT * FROM Devices', function(err, respuesta) {
+    console.log("Consultando dispositivos");
+    db_conn.query('SELECT * FROM Devices ORDER BY id DESC', function(err, respuesta) {
         if (err) {
             res.send(err).status(500);
             return;

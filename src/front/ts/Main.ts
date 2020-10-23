@@ -28,25 +28,12 @@ class Main implements EventListenerObject, GETResponseListener, POSTResponseList
     counter: number = 0;
 
     main(): void {
-        console.log("Hola mundo desde main");
-        let users = new Array<User>();
-
-        users.push(new User(1, "Juan", "juan@mail.com"));
-        users.push(new User(2, "Pedro", "pedro@mail.com"));
-        users.push(new User(3, "David", "david@mail.com"));
-        users.push(new User(4, "Ernesto", "ernesto@mail.com"));
-
-        this.mostrarUsers(users);
-
         this.mf = new MyFramework();
         this.view = new ViewMainPage(this.mf);
 
         this.mf.getElementById("boton").addEventListener("click", this);
 
         this.mf.requestGET("http://localhost:8000/devices", this);
-
-        document.getElementsByClassName(".collapsible");
-
     }
 
     mostrarUsers(users: Array<User>): void {
@@ -104,6 +91,7 @@ class Main implements EventListenerObject, GETResponseListener, POSTResponseList
             this.mf.requestPOST("http://localhost:8000/devices", data, this);
             name.value = "";
             description.value = "";
+            this.mf.requestGET("http://localhost:8000/devices", this);
         } else if (b.id.startsWith("dev_")) {
             console.log(`Cambio en switch: ${b.id}`);
             console.log(`Está en on: ${(<HTMLInputElement>b).checked}`);

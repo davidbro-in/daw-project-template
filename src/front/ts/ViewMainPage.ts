@@ -8,7 +8,7 @@ class ViewMainPage {
 
     showDevices(devices: DeviceInt[]): void {
         let e: HTMLElement = this.mf.getElementById("device_list");
-
+        e.innerHTML = "";
         for (let device of devices) {
             let image_name: string;
             switch (device.type) {
